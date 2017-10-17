@@ -18,9 +18,14 @@ shinyServer(function(input, output) {
             leaflet()
         } else {
             img_exif = read_exif(input$img$datapath)
-            leaflet() %>%
-                addTiles() %>%
-                addMarkers(lng = img_exif$GPSLongitude, lat = img_exif$GPSLatitude)
+            if (!("GPSPosition" %in% names(img_exif))) {
+                leaflet()
+            } else {
+                leaflet() %>%
+                    addTiles() %>%
+                    addMarkers(lng = img_exif$GPSLongitude,
+                               lat = img_exif$GPSLatitude)
+            }
         }
     })
 })

@@ -13,20 +13,14 @@ library(leaflet)
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
 
-  # Application title
-  titlePanel("photo gps"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-        fileInput("img", "Choose Image File",
-                  multiple = FALSE,
-                  accept = c("image/jpeg", "image/jpg"))
+    fileInput(
+        "img",
+        "Choose Image File",
+        multiple = FALSE,
+        accept = c("image/jpeg", "image/jpg")
     ),
 
-    # Show a plot of the generated distribution
-    mainPanel(
-        leafletOutput('mymap')
-    )
-  )
+    hr(),
+
+    leafletOutput('mymap')
 ))
