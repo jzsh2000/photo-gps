@@ -13,11 +13,15 @@ library(leaflet)
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
 
-    fileInput(
-        "img",
-        "Choose Image File",
-        multiple = FALSE,
-        accept = c("image/jpeg", "image/jpg")
+    fluidRow(
+        column(width = 8,
+               fileInput(
+                   "img",
+                   "Choose Image File",
+                   multiple = FALSE,
+                   accept = c("image/jpeg", "image/jpg")
+               )),
+        column(width = 4, textOutput('country'))
     ),
 
     hr(),
