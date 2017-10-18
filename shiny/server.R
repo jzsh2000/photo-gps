@@ -40,4 +40,15 @@ shinyServer(function(input, output) {
                 addMarkers(lng = lng, lat = lat)
         }
     })
+
+    output$gps <- renderUI({
+        tags$ul(
+            tags$li('Longitude:',
+                    tags$span(class = 'text-primary',
+                              round(get_gps()$lng, digits = 4))),
+            tags$li('Latitude:',
+                    tags$span(class = 'text-primary',
+                              round(get_gps()$lat, digits = 4)))
+        )
+    })
 })

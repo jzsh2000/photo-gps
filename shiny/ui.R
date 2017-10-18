@@ -13,6 +13,10 @@ library(leaflet)
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
 
+    tags$head(
+        tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+    ),
+
     fluidRow(
         column(width = 8,
                fileInput(
@@ -21,7 +25,7 @@ shinyUI(fluidPage(
                    multiple = FALSE,
                    accept = c("image/jpeg", "image/jpg")
                )),
-        column(width = 4, textOutput('country'))
+        column(width = 4, uiOutput('gps'))
     ),
 
     hr(),
