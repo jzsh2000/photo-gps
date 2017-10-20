@@ -27,6 +27,10 @@ shinyServer(function(input, output) {
         }
     })
 
+    get_pos_input <- reactive({
+        list(lat = input$lat, lng = input$lng)
+    }) %>% debounce(1500)
+
     output$mymap <- renderLeaflet({
 
         lng = get_gps()$lng
@@ -55,6 +59,7 @@ shinyServer(function(input, output) {
     output$mymap_2 <- renderLeaflet({
         leaflet() %>%
             addTiles() %>%
-            addMarkers(lng = input$lng, lat = input$lat)
+            addMarkers(lng = get_pos_input()$lng,
+                       lat = get_pos_input()$lat)
     })
 })
