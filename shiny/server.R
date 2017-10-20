@@ -51,4 +51,10 @@ shinyServer(function(input, output) {
                               round(get_gps()$lat, digits = 4)))
         )
     })
+
+    output$mymap_2 <- renderLeaflet({
+        leaflet() %>%
+            addTiles() %>%
+            addMarkers(lng = input$lng, lat = input$lat)
+    })
 })
