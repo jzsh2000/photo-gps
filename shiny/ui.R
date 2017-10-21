@@ -35,8 +35,10 @@ shinyUI(navbarPage('aha',
              ),
 
     tabPanel("find pos",
-             numericInput('lng', label = 'Longitude', value = 116.3914),
-             numericInput('lat', label = 'Latitude', value = 39.9073),
+             numericInput('lng', label = 'Longitude', value = 116.3914,
+                          min  = -180, max = 180, step = 0.5),
+             numericInput('lat', label = 'Latitude', value = 39.9030,
+                          min  = -90, max = 90, step = 0.5),
 
              hr(),
 
