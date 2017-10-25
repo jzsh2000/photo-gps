@@ -19,7 +19,7 @@ library(rworldmap)
 #   - column 2 contains the latitude in degrees
 coords2country = function(points)
 {
-    countriesSP <- getMap(resolution='low')
+    countriesSP <- getMap(resolution = 'low')
     #countriesSP <- getMap(resolution='high') #you could use high res map from rworldxtra if you were concerned about detail
 
     # convert our list of points to a SpatialPoints object
@@ -27,7 +27,7 @@ coords2country = function(points)
     # pointsSP = SpatialPoints(points, proj4string=CRS(" +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"))
 
     #setting CRS directly to that from rworldmap
-    pointsSP = SpatialPoints(points, proj4string=CRS(proj4string(countriesSP)))
+    pointsSP = SpatialPoints(points, proj4string = CRS(proj4string(countriesSP)))
 
 
     # use 'over' to get indices of the Polygons object containing each point
@@ -56,6 +56,17 @@ shinyServer(function(input, output) {
         }
     })
 
+    get_country <- reactive({
+        if (is.na(get_gps()$lng) || is.na(get_gps()$lat)) {
+            NA_character_
+        } else {
+            as.character(coords2country(data.frame(
+                lon = get_gps()$lng,
+                lat = get_gps()$lat
+            )))
+        }
+    })
+
     get_pos_input <- reactive({
         list(lat = input$lat, lng = input$lng)
     }) %>% debounce(1500)
@@ -75,13 +86,16 @@ shinyServer(function(input, output) {
     })
 
     output$gps <- renderUI({
-        tags$ul(
-            tags$li('Longitude:',
-                    tags$span(class = 'text-primary',
-                              round(get_gps()$lng, digits = 4))),
-            tags$li('Latitude:',
-                    tags$span(class = 'text-primary',
-                              round(get_gps()$lat, digits = 4)))
+        tags$div(
+            tags$span('Country:', tags$span(class = 'text-primary', get_country())),
+            tags$ul(
+                tags$li('Longitude:',
+                        tags$span(class = 'text-primary',
+                                  round(get_gps()$lng, digits = 4))),
+                tags$li('Latitude:',
+                        tags$span(class = 'text-primary',
+                                  round(get_gps()$lat, digits = 4)))
+            )
         )
     })
 
